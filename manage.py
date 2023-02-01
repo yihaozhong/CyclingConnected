@@ -3,6 +3,7 @@
 import os
 import sys
 
+# A command-line utility that lets you interact with this Django project in various ways.
 
 def main():
     """Run administrative tasks."""
