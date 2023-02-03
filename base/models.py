@@ -4,6 +4,12 @@ from django.db import models
 
 # handles data logic, interacts with database
 
+# where we create database tables
+# we create python class, representing the database
+    # each variable is each columns 
+    # essentially a model of tables, so why it is called models
+
+# create a room class, inherient from Django models
 class Room(models.Model):
     # host =
     # topic = 
