@@ -16,7 +16,9 @@
         <hr>
 
         {% for topic in topics%}
-
+            <div>
+                <a href="{% url 'home' %}?q= {{topic.name}}">{{topic.name}}</a>
+            </div>
         {% endfor%}
     </div>
 
