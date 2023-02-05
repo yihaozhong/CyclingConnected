@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from .models import Room, Topic
 from .forms import RoomForm
@@ -24,15 +24,25 @@ from .forms import RoomForm
 
 # dont use login()
 def loginPage(request):
-    if request.method == "Post":
+    if request.method == "POST":
+        # get the user name and pwd from user 
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        # check exist
         try:
             user = User.objects.get(username = username)
         except:
             messages.error(request, 'User does not exist!')
-            
+        
+        # check the pwd
+        user = authenticate(request, username = username, password = password)
+        # login in - redict to home
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username OR Password Not CORRECT!')
 
     context = {}
     return render(request, 'base/login_register.html', context)
