@@ -27,6 +27,11 @@ from .forms import RoomForm
 
 # dont use login()
 def loginPage(request):
+
+    if request.user.is_authenticated:
+        return redirect('home')
+
+
     if request.method == "POST":
         # get the user name and pwd from user 
         username = request.POST.get('username')
@@ -89,9 +94,13 @@ def createRoom(request):
     return render(request, 'base/room_form.html', context)
 # function, urls 
 
+@login_required(login_url = '/login')
 def updateRoom(request, pk): # pk for primary key
     room = Room.objects.get(id = pk)
     form = RoomForm(instance = room) # prefill with the room value to form
+
+    if request.user != room.host:
+        return  HttpResponse('Your are not allowed here!!')
 
     if request.method == 'POST':
         form = RoomForm(request.POST, instance= room)
@@ -102,8 +111,13 @@ def updateRoom(request, pk): # pk for primary key
     context = {'form': form}
     return render(request, 'base/room_form.html', context)
 
+@login_required(login_url = '/login')
 def deleteRoom(request, pk):
     room = Room.objects.get(id = pk)
+
+    if request.user != room.host:
+        return  HttpResponse('Your are not allowed here!!')
+
     if request.method == 'POST':
         room.delete()
         return redirect('home')
