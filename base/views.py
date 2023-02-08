@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Room, Topic
 from .forms import RoomForm
+
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
@@ -61,7 +63,9 @@ def logoutUser(request):
 
 def registerPage(request):
     page = 'register'
-    return render(request, 'base/login_register.html')
+
+    form = UserCreationForm()
+    return render(request, 'base/login_register.html', {'form' : form})
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
