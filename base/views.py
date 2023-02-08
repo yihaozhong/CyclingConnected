@@ -36,7 +36,7 @@ def loginPage(request):
 
     if request.method == "POST":
         # get the user name and pwd from user 
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         password = request.POST.get('password')
 
         # check exist
@@ -65,6 +65,20 @@ def registerPage(request):
     page = 'register'
 
     form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit = False) # freeze the form, access the user
+
+            # clean up a bit
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'An error occured during registration')
+         
     return render(request, 'base/login_register.html', {'form' : form})
 
 def home(request):
