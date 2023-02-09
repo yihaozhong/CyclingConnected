@@ -100,7 +100,9 @@ def room(request, pk):
         # room read from the database
         # use get() from the datatable
     room = Room.objects.get(id=pk)
-    context = {'room': room}
+
+    messages = room.message_set.all()
+    context = {'room': room, 'messages':messages}
     return render(request, 'base/room.html', context)
 
 @login_required(login_url = '/login')
