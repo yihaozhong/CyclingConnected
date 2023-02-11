@@ -2,7 +2,15 @@
 
 {% block content %}
 
-<div class = "room_container%">
+
+<style>
+    .room-container{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
+</style>
+
+<div class = "room-container">
 
     <div>
 
@@ -26,7 +34,7 @@
         </div>
 
         {% if request.user.is_authenticated%}
-        <div class = "comment-wrapper">
+        <div class = "comment-form">
 
             <form method = "POST" action="">
 
@@ -40,7 +48,7 @@
 
     <div>
         <h3>Participants</h3>
-        <hr>
+        <hr>  
     </div>
 </div>
 {% endblock %}
