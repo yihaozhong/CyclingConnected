@@ -131,15 +131,24 @@ def userProfile(request, pk):
 @login_required(login_url = '/login')
 def createRoom(request):
     form = RoomForm() # create a form
+    topics = Topic.objects.all()
     if request.method == 'POST': # send the post data
-        form = RoomForm(request.POST) # add the post data to the form 
-        if form.is_valid(): # if it is valid
-            room = form.save(commit = False)
-            room.host = request.user
-            room.save()
-            return redirect('home') # return to the home page
+        # form = RoomForm(request.POST) # add the post data to the form 
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name = topic_name) # create if not exist
+        Room.objects.create(
+            host = request.user,
+            topic = topic, 
+            name = request.POST.get('name'),
+            description = request.POST.get('description'),
+        )
+        # if form.is_valid(): # if it is valid
+        #     room = form.save(commit = False)
+        #     room.host = request.user
+        #     room.save()
+        return redirect('home') # return to the home page
 
-    context = {'form': form}
+    context = {'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
 # function, urls 
 
@@ -147,17 +156,18 @@ def createRoom(request):
 def updateRoom(request, pk): # pk for primary key
     room = Room.objects.get(id = pk)
     form = RoomForm(instance = room) # prefill with the room value to form
-
+    topics = Topic.objects.all()
     if request.user != room.host:
         return  HttpResponse('Your are not allowed here!!')
 
     if request.method == 'POST':
         form = RoomForm(request.POST, instance= room)
+        
         if form.is_valid(): # if it is valid
             form.save() # save it to database
             return redirect('home') # return to the home page
 
-    context = {'form': form}
+    context = {'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
 
 @login_required(login_url = '/login')
