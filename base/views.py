@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from django.contrib.auth.decorators import login_required
 
-from .models import Room, Topic, Message
+from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm
 
 from django.contrib.auth.forms import UserCreationForm
