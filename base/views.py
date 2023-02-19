@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from .models import Room, Topic, Message
-from .forms import RoomForm
+from .forms import RoomForm, UserForm
 
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
@@ -200,5 +200,13 @@ def deleteMessage(request, pk):
 
 @login_required(login_url = '/login')
 def updateUser(request):
-    context = {}
+    user = request.user
+    form = UserForm(instance=user)
+    context = {'form': form}
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk = user.id)
     return render(request, 'base/update-user.html', context)
