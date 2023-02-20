@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-@f%2b32vxzm-hhmcfg9n*4%u4d7z0rn0vf!ibm_(4imk3y7d#w"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['cyclingconnected.herokuapp.com']
 
