@@ -6,6 +6,5 @@ https://cyclingconnected.herokuapp.com/
 
 
 - Developed a website with Django deployed on Heroku, supporting chat rooms, user profiles, and activity feeds.
--	Built a NoSQL database with MongoDB to store the user and cohort chat information and data.
-Upatde
+-	Built a NoSQL database with MongoDB to store the user and cohort chat information and data.Updated
 
