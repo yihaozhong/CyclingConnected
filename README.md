@@ -1,4 +1,4 @@
-# Cycling Connected WebApp 
+# Cycling Connected WebApp for students
 
 https://cyclingconnected.herokuapp.com/
 
